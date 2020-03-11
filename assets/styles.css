@@ -1,0 +1,50 @@
+body{
+    background-color: #222;
+    color: #ea7200;
+}
+main{
+    display: flex;
+    flex-flow: nowrap column;
+}
+#forms{
+    border: 1px solid #ea7200;
+    margin: .5rem;
+    padding: .5rem;
+    display: flex;
+    flex-flow: nowrap row;
+}
+#forms > *{
+    border: 1px solid #21c;
+    margin: .5rem;
+    padding: .5rem;
+}
+#enrollment{
+    display: flex;
+    flex-flow: nowrap row;
+    flex: 1;
+}
+#unenrolled{
+    border: 1px solid #ea7200;
+    margin: .5rem;
+    padding: .5rem;
+    
+}
+ul{
+    padding: 0;
+    list-style-type: none;
+}
+#schoolList{
+    border: 1px solid #ea7200;
+    margin: .5rem;
+    padding: .5rem;
+    display: flex;
+    flex-flow: wrap row;
+    flex: 2;
+}
+.school{
+    border: 1px solid #405;
+    margin: .5rem;
+    padding: .5rem;
+    display: flex;
+    flex-flow: nowrap column;
+}
