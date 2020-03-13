@@ -22,17 +22,27 @@ const sync = async() => {
     `;
     client.query(SQL);
     const [NYU, BYU, UCB, Toudai, CDU] = await Promise.all([
-        createSchool({name: 'NYU'}),
-        createSchool({name: 'BYU'}),
-        createSchool({name: 'UCB'}),
-        createSchool({name: 'Toudai'}),
-        createSchool({name: 'CDU'})
+        createItem('schools', {name: 'NYU'}),
+        createItem('schools', {name: 'BYU'}),
+        createItem('schools', {name: 'UCB'}),
+        createItem('schools', {name: 'Toudai'}),
+        createItem('schools', {name: 'CDU'}),
+        createItem('students', {name: 'Billard Valerius'}),
+        createItem('students', {name: 'Ootani Kou'}),
+        createItem('students', {name: 'Yote Patel'}),
+        createItem('students', {name: 'Meghan Tullman'})
     ]);
 };
 
-const createSchool = async(school) => {
-    const SQL = 'INSERT INTO schools(name) values ($1) returning *';
-    return (await client.query(SQL, [school.name])).rows[0];
+const createItem = async(table, item) => {
+    const itemArr = item.schoolId ? [item.name, item.schoolId] : [item.name];
+    const SQL = `INSERT INTO ${ table } (name${ item.schoolId ? ', "schoolId"' : '' }) values ($1${ item.schoolId ? ', $2' : '' }) returning *`;
+    return (await client.query(SQL, itemArr)).rows[0];
+};
+
+const deleteItem = async(table, id) => {
+    const SQL = `DELETE FROM ${ table } WHERE id = ($1)`;
+    return (await client.query(SQL, [id])).rows[0];
 };
 
 const readTable = async(table) => {
@@ -40,8 +50,15 @@ const readTable = async(table) => {
     return (await client.query(SQL)).rows;
 };
 
+const updateTable = async(table, id) => {
+    const SQL = `UPDATE`;
+    console.log('updating table', table, 'at', id);
+};
+
 module.exports = {
     sync,
-    createSchool,
+    createItem,
+    deleteItem,
+    updateTable,
     readTable
 };

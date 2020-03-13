@@ -2,49 +2,78 @@ body{
     background-color: #222;
     color: #ea7200;
 }
+input:focus{
+    outline: none;
+}
+select:focus{
+    outline: none;
+}
+h1, h2, h3{
+    text-align: center;
+    padding: 1rem;
+    margin: 0;
+}
 main{
     display: flex;
     flex-flow: nowrap column;
 }
 #forms{
-    border: 1px solid #ea7200;
-    margin: .5rem;
-    padding: .5rem;
     display: flex;
     flex-flow: nowrap row;
+    justify-content: space-around;
+}
+#forms input{
+    margin: .5rem;
+    padding: .25rem;
+}
+#forms select{
+    margin: .5rem;
+    padding: .25rem;
 }
 #forms > *{
+    width: 288px;
     border: 1px solid #21c;
     margin: .5rem;
     padding: .5rem;
 }
 #enrollment{
+    width: 100vw;
     display: flex;
     flex-flow: nowrap row;
-    flex: 1;
+    justify-content: center;
 }
 #unenrolled{
     border: 1px solid #ea7200;
     margin: .5rem;
     padding: .5rem;
-    
+    flex: 1;
 }
 ul{
     padding: 0;
     list-style-type: none;
 }
 #schoolList{
-    border: 1px solid #ea7200;
     margin: .5rem;
-    padding: .5rem;
     display: flex;
     flex-flow: wrap row;
     flex: 2;
 }
 .school{
     border: 1px solid #405;
-    margin: .5rem;
+    margin-right: 1rem;
+    margin-bottom: 1rem;
     padding: .5rem;
     display: flex;
     flex-flow: nowrap column;
+    width: 288px;
+}
+.student{
+    display: flex;
+    justify-content: space-between;
+    margin-top: .25rem;
+    margin-bottom: .25rem;
+}
+.columnNW{
+    display: flex;
+    flex-flow: column nowrap;
 }

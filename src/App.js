@@ -9,6 +9,7 @@ const { useEffect, useState } = React;
 const App = () => {
     const [schools, setSchools] = useState([]);
     const [students, setStudents] = useState([]);
+    const [error, setError] = useState([]);
 
     useEffect(() => {
         Promise.all([
@@ -27,18 +28,17 @@ const App = () => {
         <main>
             <h1>Acme Schools</h1>
             <section id = 'forms'>
-                <CreateSchool />
-                <CreateStudent /> 
+                <CreateSchool schools = { schools } setSchools = { setSchools } setError = { setError }/>
+                <CreateStudent students = { students } setStudents = { setStudents } schools = { schools } setError = { setError }/> 
             </section>
             <section id = 'enrollment'>
                 <div id = 'unenrolled'>
-                    <Unenrolled />
+                    <Unenrolled students = { students } setStudents = { setStudents }/>
                 </div>
                 <ul id = 'schoolList'>{
                     schools.map((school, idx) => {
-                        console.log(school)
                         return (
-                            <li class = 'school' key = { idx }><SchoolList school = { school }/></li>
+                            <li className = 'school' key = { idx }><SchoolList school = { school }/></li>
                         )
                     })
                 }</ul>

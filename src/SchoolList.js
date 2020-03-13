@@ -1,11 +1,9 @@
 import React from 'react';
 
 const SchoolList = ({ school }) => {
-    console.log(school)
     return (
         <div>
-            <div>I am a school.</div>
-            <div>This particular school is: { school.name }</div> 
+            <h2>{ school.name }</h2> 
         </div>
         
     )
