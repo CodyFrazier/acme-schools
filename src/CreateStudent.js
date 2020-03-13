@@ -5,7 +5,7 @@ const { useState } = React;
 
 const CreateStudent = ({ students, setStudents, schools, setError }) => {
     const [name, setName] = useState('');
-    const [schoolId, setSchoolId] = useState(null);
+    const [schoolId, setSchoolId] = useState();
 
     const submitStudent = async({ target }) => {
         event.preventDefault();
@@ -23,12 +23,12 @@ const CreateStudent = ({ students, setStudents, schools, setError }) => {
         <form className = 'columnNW' onSubmit = { submitStudent }>
             <h2>Create Student</h2>
             <input id = 'studentVal' placeholder = 'Name of New Student...' value = { name } onChange = { ev => setName(ev.target.value) }/>
-            <select>
-                <option>-- none --</option>
+            <select value = { schoolId } onChange = { ({ target }) => setSchoolId(target[target.selectedIndex].value) }>
+                <option value = { null } key = { 'default' }>-- none --</option>
                 {
                 schools.map((school, idx) => {
                     return (
-                        <option id = { school.id } key = { idx }>{ school.name }</option>
+                        <option value = { school.id } key = { idx }>{ school.name }</option>
                     )
                 })
             }</select>

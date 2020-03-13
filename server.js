@@ -21,6 +21,9 @@ app.get('/api/:type', (request, response, next) => {
 app.post('/api/:type', (request, response, next) => {
     const type = ['schools', 'students'].find( table => table === request.params.type) || '';
     if(type){
+        if(request.body.schoolId === '-- none --'){
+            request.body.schoolId = null;
+        }
         db.createItem(type, request.body)
         .then(data => {console.log(data); response.send(data)})
         .catch(next);

@@ -35,6 +35,7 @@ const sync = async() => {
 };
 
 const createItem = async(table, item) => {
+    console.log(item.schoolId)
     const itemArr = item.schoolId ? [item.name, item.schoolId] : [item.name];
     const SQL = `INSERT INTO ${ table } (name${ item.schoolId ? ', "schoolId"' : '' }) values ($1${ item.schoolId ? ', $2' : '' }) returning *`;
     return (await client.query(SQL, itemArr)).rows[0];
