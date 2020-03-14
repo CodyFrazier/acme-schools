@@ -3,7 +3,7 @@ import axios from 'axios';
 import SchoolList from './SchoolList';
 const { useState } = React;
 
-const CreateStudent = ({ students, setStudents, schools, setError }) => {
+const CreateStudent = ({ students, setStudents, schools, setError, params, setParams }) => {
     const [name, setName] = useState('');
     const [schoolId, setSchoolId] = useState('null');
 

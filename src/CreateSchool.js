@@ -2,7 +2,7 @@ import React from 'react';
 import Axios from 'axios';
 const { useState } = React;
 
-const CreateSchool = ({ schools, setSchools, setError }) => {
+const CreateSchool = ({ schools, setSchools, setError, params, setParams }) => {
     const [name, setName] = useState('');
 
     const submitSchool = async({ target }) => {
