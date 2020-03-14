@@ -51,9 +51,25 @@ const readTable = async(table) => {
     return (await client.query(SQL)).rows;
 };
 
-const updateTable = async(table, id) => {
-    const SQL = `UPDATE`;
-    console.log('updating table', table, 'at', id);
+const updateTable = async(table, id, item) => {
+    let SQL = '';
+    if(table === 'students'){
+        if(item.schoolId, item.name !== undefined){
+            SQL = `UPDATE ${ table } SET "schoolId" = ($1), name = ($2) WHERE id = ($3) RETURNING *;`;
+            return (await client.query(SQL, [item.schooId, item.name, id]));
+        }else if(item.schoolId !== undefined){
+            SQL = `UPDATE ${ table } SET "schoolId" = ($1) WHERE id = ($2) RETURNING *;`;
+            return (await client.query(SQL, [item.schoolId, id]));
+        }else if(item.name !== undefined){
+            `UPDATE ${ table } SET name = ($1) WHERE id = ($2) RETURNING *;`;
+            return (await client.query(SQL, [item.name, id]));
+        }else{
+            return 'No Update Was Requested';
+        }
+    }else if(table === 'schools'){
+        const SQL = `UPDATE ${ table } SET name = ($1) WHERE id = ($2);`
+        return (await client.query(SQL, [item.name, id]));
+    }
 };
 
 module.exports = {

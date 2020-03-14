@@ -33,12 +33,12 @@ const App = () => {
             </section>
             <section id = 'enrollment'>
                 <div id = 'unenrolled'>
-                    <Unenrolled students = { students } setStudents = { setStudents }/>
+                    <Unenrolled students = { students } setStudents = { setStudents } schools = { schools }/>
                 </div>
                 <ul id = 'schoolList'>{
                     schools.map((school, idx) => {
                         return (
-                            <li className = 'school' key = { idx }><SchoolList school = { school }/></li>
+                            <li className = 'school' key = { idx }><SchoolList school = { school } students = { students } setStudents = { setStudents } setError = { setError }/></li>
                         )
                     })
                 }</ul>

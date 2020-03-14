@@ -21,7 +21,7 @@ app.get('/api/:type', (request, response, next) => {
 app.post('/api/:type', (request, response, next) => {
     const type = ['schools', 'students'].find( table => table === request.params.type) || '';
     if(type){
-        if(request.body.schoolId === '-- none --'){
+        if(request.body.schoolId === '-- none --' || request.body.schoolId === 'null'){
             request.body.schoolId = null;
         }
         db.createItem(type, request.body)
@@ -42,7 +42,10 @@ app.delete('/api/:type/:id', (request, response, next) => {
 app.put('/api/:type/:id', (request, response, next) => {
     const type = ['schools', 'students'].find( table => table === request.params.type) || '';
     if(type){
-        db.updateTable(type, request.params.id)
+        if(request.body.schoolId === '-- none --' || request.body.schoolId === 'null'){
+            request.body.schoolId = null;
+        }
+        db.updateTable(type, request.params.id, request.body)
         .then(data => response.send(data))
         .catch(next);
     }

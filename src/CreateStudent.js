@@ -5,7 +5,7 @@ const { useState } = React;
 
 const CreateStudent = ({ students, setStudents, schools, setError }) => {
     const [name, setName] = useState('');
-    const [schoolId, setSchoolId] = useState();
+    const [schoolId, setSchoolId] = useState('null');
 
     const submitStudent = async({ target }) => {
         event.preventDefault();
@@ -13,7 +13,7 @@ const CreateStudent = ({ students, setStudents, schools, setError }) => {
             const created = (await axios.post('/api/students', { name, schoolId })).data;
             setStudents([...students, created]);
             setName('');
-            setSchoolId(null);
+            setSchoolId('null');
             setError('');
         }catch(ex){
             setError(ex.response.data.message)
@@ -24,7 +24,7 @@ const CreateStudent = ({ students, setStudents, schools, setError }) => {
             <h2>Create Student</h2>
             <input id = 'studentVal' placeholder = 'Name of New Student...' value = { name } onChange = { ev => setName(ev.target.value) }/>
             <select value = { schoolId } onChange = { ({ target }) => setSchoolId(target[target.selectedIndex].value) }>
-                <option value = { null } key = { 'default' }>-- none --</option>
+                <option value = { 'null' } key = { 'default' }>-- none --</option>
                 {
                 schools.map((school, idx) => {
                     return (
