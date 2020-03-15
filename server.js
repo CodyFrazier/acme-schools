@@ -14,7 +14,7 @@ app.get('/', (request, response, next) => {
 
 app.get('/api/:type', (request, response, next) => {
     db.readTable(request.params.type)
-    .then(data => response.send(data))
+    .then(data => {console.log('GET REQUEST:', data); response.send(data)})
     .catch(next);
 });
 
@@ -25,7 +25,7 @@ app.post('/api/:type', (request, response, next) => {
             request.body.schoolId = null;
         }
         db.createItem(type, request.body)
-        .then(data => {console.log(data); response.send(data)})
+        .then(data => {console.log('POST REQUEST:', data); response.send(data)})
         .catch(next);
     }
 })
@@ -34,7 +34,7 @@ app.delete('/api/:type/:id', (request, response, next) => {
     const type = ['schools', 'students'].find( table => table === request.params.type) || '';
     if(type){
         db.deleteItem(type, request.params.id)
-        .then(data => response.send(data))
+        .then(data => {console.log('DELETE REQUEST:', data); response.send(data)})
         .catch(next);
     }
 });
@@ -46,7 +46,7 @@ app.put('/api/:type/:id', (request, response, next) => {
             request.body.schoolId = null;
         }
         db.updateTable(type, request.params.id, request.body)
-        .then(data => response.send(data))
+        .then(data => {console.log('PUT REQUEST:', data); response.send(data)})
         .catch(next);
     }
 });

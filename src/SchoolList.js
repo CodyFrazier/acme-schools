@@ -5,8 +5,8 @@ const SchoolList = ({ school, students, setStudents, unenrolledStudents, setUnen
     const unenrollStudent = async({ target }) => {
         try{
             await (axios.put(`/api/students/${ target.id }`, { schoolId : null }));
-            const newUnrolledList = 
-            setUnenrolledStudents([...students]);
+            const newUnenrolledList = students.filter(student => !student.schoolId);
+            setUnenrolledStudents([...newUnenrolledList]);
             setError('');
         }catch(ex){
             const error = ex.response;
