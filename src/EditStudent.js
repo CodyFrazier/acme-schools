@@ -6,7 +6,7 @@ const EditStudent = ({ student, students, setStudents, setError, setParams }) =>
     const [studentName, setStudentName] = useState('');
     const [currentName, setCurrentName] = useState(student.name);
 
-    const updateStudentName = async({ target }) => {
+    const updateStudentName = async(event) => {
         event.preventDefault();
         try{
             await axios.put(`/api/students/${ student.id }`, { name : studentName });

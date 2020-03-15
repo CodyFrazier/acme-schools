@@ -17,12 +17,23 @@ main{
     display: flex;
     flex-flow: nowrap column;
 }
+a:link{
+    color: #ea7200;
+}
+a:visited{
+    color: #a31;
+}
 #forms{
     display: flex;
     flex-flow: nowrap row;
     justify-content: space-around;
 }
 #forms input{
+    border-radius: 5px;
+    font-size: 14px;
+    background-color: #111;
+    color: #ea7200;
+    border-color: #ea7200;
     margin: .5rem;
     padding: .25rem;
 }
@@ -32,7 +43,9 @@ main{
 }
 #forms > *{
     width: 288px;
-    border: 1px solid #21c;
+    border: 2px solid #21c;
+    border-radius: 5px;
+    background-color: #000;
     margin: .5rem;
     padding: .5rem;
 }
@@ -43,7 +56,9 @@ main{
     justify-content: center;
 }
 #unenrolled{
-    border: 1px solid #ea7200;
+    border: 2px solid #ea7200;
+    background-color: #000;
+    border-radius: 5px;
     margin: .5rem;
     padding: .5rem;
     flex: 1.6;
@@ -58,8 +73,15 @@ ul{
     flex-flow: wrap row;
     flex: 3;
 }
+#statistics{
+    background-color: #111;
+    border-radius: 5px;
+    padding: 1rem;
+}
 .school{
-    border: 1px solid #405;
+    border: 2px solid #515;
+    border-radius: 5px;
+    background-color: #000;
     margin-right: 1rem;
     margin-bottom: 1rem;
     padding: .5rem;
@@ -84,6 +106,7 @@ ul{
 }
 #errorMessage{
     background-color: #ea7200;
+    border-radius: 10px;
     color: #111;
     padding: .5rem;
     margin-top: 1rem;

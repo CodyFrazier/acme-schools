@@ -64,7 +64,7 @@ const App = () => {
    
     return (
         <main>
-            <a href = { '#view=landing' } onClick = { ({ target }) => setParams('#view=landing') }><h1>Acme Schools</h1></a>
+            <a href = { '#view=landing' } onClick = { () => setParams('#view=landing') }><h1>Acme Schools</h1></a>
             <section id = 'statistics'>
                 { error !== '' && <div id = 'errorMessage'>Server Error: { error }</div>}
                 <div>Students: { students.length }</div>
@@ -88,7 +88,7 @@ const App = () => {
                 <ul id = 'schoolList'>{
                     schools.map((school, idx) => {
                         return (
-                            <li className = 'school' key = { idx }><SchoolList school = { school } students = { students } setStudents = { setStudents } unenrolledStudents = { unenrolledStudents } setUnenrolledStudents = { setUnenrolledStudents } setParams = { setParams } setError = { setError } setCurrentStudent = { setCurrentStudent } setCurrentSchool = { setCurrentSchool }/></li>
+                            <li className = 'school' key = { idx }><SchoolList school = { school } students = { students } setStudents = { setStudents } setUnenrolledStudents = { setUnenrolledStudents } setParams = { setParams } setError = { setError } setCurrentStudent = { setCurrentStudent } setCurrentSchool = { setCurrentSchool }/></li>
                         )
                     })
                 }</ul>

@@ -5,7 +5,7 @@ const { useState } = React;
 const CreateSchool = ({ schools, setSchools, setError }) => {
     const [name, setName] = useState('');
 
-    const submitSchool = async({ target }) => {
+    const submitSchool = async(event) => {
         event.preventDefault();
         try{
             const created = (await Axios.post('/api/schools', { name })).data;

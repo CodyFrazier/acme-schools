@@ -24,12 +24,10 @@ const Unenrolled = ({ students, unenrolledStudents, setUnenrolledStudents, schoo
     };
 
     const unenrolledUpdate = () => {
-        console.log('unenrolled:', unenrolledStudents, students, schoolIdList)
         const newStudentList = students.filter(student => !student.schoolId);
         setUnenrolledStudents([...newStudentList]);
     };
     
-    console.log('immediately called Unenrolled List:', unenrolledStudents);
     return (
         <div>
             <h3>Unenrolled Students</h3>
@@ -37,7 +35,7 @@ const Unenrolled = ({ students, unenrolledStudents, setUnenrolledStudents, schoo
                 unenrolledStudents.map((student, idx) => {
                     return (
                         <li className = 'student' key = { idx }>
-                            <a href = { `#view=edit_student&id=${ student.id }` } className = 'spaced' onClick = { ({ target }) => { setCurrentStudent(student); setParams(`#view=edit_student&id=${ student.id }`); } }>{ student.name }</a>
+                            <a href = { `#view=edit_student&id=${ student.id }` } className = 'spaced' onClick = { () => { setCurrentStudent(student); setParams(`#view=edit_student&id=${ student.id }`); } }>{ student.name }</a>
                             <form value = { student.schoolId || 'null' } className = 'spaced' onSubmit = { ev => { event.preventDefault(); updateStudent(student, idx)} }>
                                 <select value = { schoolIdList[idx] || 'null' } onChange = { ({ target }) => schoolIdUpdate(target[target.selectedIndex].value, idx) }>
                                     <option value = { 'null' } key = { 'default' }>-- none --</option>

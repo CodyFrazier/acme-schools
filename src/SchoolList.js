@@ -1,7 +1,8 @@
 import React from 'react';
 import axios from 'axios';
 
-const SchoolList = ({ school, students, setStudents, unenrolledStudents, setUnenrolledStudents, setError, setParams, setCurrentStudent, setCurrentSchool }) => {
+const SchoolList = ({ school, students, setUnenrolledStudents, setError, setParams, setCurrentStudent, setCurrentSchool }) => {
+
     const unenrollStudent = async({ target }) => {
         try{
             await (axios.put(`/api/students/${ target.id }`, { schoolId : null }));

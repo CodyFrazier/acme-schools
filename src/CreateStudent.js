@@ -6,7 +6,7 @@ const CreateStudent = ({ students, setStudents, schools, setError}) => {
     const [name, setName] = useState('');
     const [schoolId, setSchoolId] = useState('null');
 
-    const submitStudent = async({ target }) => {
+    const submitStudent = async(event) => {
         event.preventDefault();
         try{
             const created = (await axios.post('/api/students', { name, schoolId })).data;
