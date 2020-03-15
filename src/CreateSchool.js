@@ -2,7 +2,7 @@ import React from 'react';
 import Axios from 'axios';
 const { useState } = React;
 
-const CreateSchool = ({ schools, setSchools, setError, params, setParams }) => {
+const CreateSchool = ({ schools, setSchools, setError }) => {
     const [name, setName] = useState('');
 
     const submitSchool = async({ target }) => {
@@ -13,9 +13,9 @@ const CreateSchool = ({ schools, setSchools, setError, params, setParams }) => {
             setName('');
             setError('');
         }catch(ex){
-            setError(ex.response.data.message);
+            const error = ex.response;
+            setError(`Code ${ error.status } - ${ error.statusText }`);
         }
-        
     };
 
     return (

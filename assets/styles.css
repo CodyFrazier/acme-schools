@@ -82,3 +82,10 @@ ul{
     justify-content: space-between;
     flex: 1;
 }
+#errorMessage{
+    background-color: #ea7200;
+    color: #111;
+    padding: .5rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}

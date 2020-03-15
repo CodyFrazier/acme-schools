@@ -1,9 +1,8 @@
 import React from 'react';
 import axios from 'axios';
-import SchoolList from './SchoolList';
 const { useState } = React;
 
-const CreateStudent = ({ students, setStudents, schools, setError, params, setParams }) => {
+const CreateStudent = ({ students, setStudents, schools, setError}) => {
     const [name, setName] = useState('');
     const [schoolId, setSchoolId] = useState('null');
 
@@ -16,7 +15,8 @@ const CreateStudent = ({ students, setStudents, schools, setError, params, setPa
             setSchoolId('null');
             setError('');
         }catch(ex){
-            setError(ex.response.data.message)
+            const error = ex.response;
+            setError(`Code ${ error.status } - ${ error.statusText }`);
         }
     };
     return (

@@ -11,7 +11,7 @@ const { useEffect, useState } = React;
 
 //TODO:
 /*
-    1.                  Implement error to display when something goes wrong.
+    1.                  Implement error to display when something goes wrong.           CHECK
 
     2.                  Ensure component rerendering when updating student.schoolId
 
@@ -21,13 +21,14 @@ const { useEffect, useState } = React;
 
     5.                  Implement school deletion                                       CHECK
 
-    6.                  School and Student Enrollment statistics show on page
+    6.                  School and Student Enrollment statistics show on page           CHECK
 */
 
 const App = () => {
     const [schools, setSchools] = useState([]);
     const [students, setStudents] = useState([]);
-    const [error, setError] = useState([]);
+    const [unenrolledStudents, setUnenrolledStudents] = useState([]);
+    const [error, setError] = useState('');
     const [params, setParams] = useState(`#${ window.location.hash.slice(1) }`);
     const [currentStudent, setCurrentStudent] = useState({});
     const [currentSchool, setCurrentSchool] = useState({});
@@ -35,7 +36,6 @@ const App = () => {
     useEffect(() => {
         window.addEventListener('hashchange', () => {
             const paramObj = qs.parse(window.location.hash.slice(1));
-            console.log(`#${ qs.stringify(paramObj) }`)
             setParams(`#${ qs.stringify(paramObj) }`);
         });
 
@@ -43,6 +43,7 @@ const App = () => {
             window.location.hash = 'view=landing';
         }
     }, []);
+
     useEffect(() => {
         Promise.all([
             axios.get('api/schools'),
@@ -52,31 +53,47 @@ const App = () => {
         .then( results => {
             setSchools(results[0]);
             setStudents(results[1]);
+            const unenrolled = results[1].filter(student => !student.schoolId);
+            setUnenrolledStudents([...unenrolled]);
         })
-        .catch( ex => setError(ex.response.data.message));
+        .catch( ex => {
+            const error = ex.response;
+            setError(`Code ${ error.status } - ${ error.statusText }`);
+        });
     }, []);
-
+   
     return (
         <main>
             <a href = { '#view=landing' } onClick = { ({ target }) => setParams('#view=landing') }><h1>Acme Schools</h1></a>
-            <section id = 'forms'>
-                { (params === `#${ qs.stringify({ view: 'landing' }) }` || params === `${ qs.parse('#view=landing') }`) && <CreateSchool schools = { schools } setSchools = { setSchools } setError = { setError } params = { params } setParams = { setParams }/> }
-                { (params === `#${ qs.stringify({ view: 'landing' }) }` || params === `${ qs.parse('#view=landing') }`) && <CreateStudent students = { students } setStudents = { setStudents } schools = { schools } setError = { setError } params = { params } setParams = { setParams }/> }
-                { (params.includes(`#${ qs.stringify( { view : 'edit_school' } ) }`) || params.includes(`#${ qs.parse('#view=edit_schools') }`)) && <EditSchool school = { currentSchool } schools = { schools } setSchools = { setSchools } params = { params } setParams = { setParams }/>}
-                { (params.includes(`#${ qs.stringify( { view : 'edit_student' } ) }`) || params.includes(`#${ qs.parse('#view=edit_students') }`)) && <EditStudent student = { currentStudent } students = { students } setStudents = { setStudents } params = { params } setParams = { setParams }/> }
+            <section id = 'statistics'>
+                { error !== '' && <div id = 'errorMessage'>Server Error: { error }</div>}
+                <div>Students: { students.length }</div>
+                <div>Unenrolled Students: { students.filter(student => !student.schoolId).length }</div>
+                <div>Enrolled Students: { students.filter(student => student.schoolId).length }</div>
+                <div>Schools: { schools.length }</div>
             </section>
+            <section id = 'forms'>
+
+                { (params === `#${ qs.stringify({ view: 'landing' }) }` || params === `${ qs.parse('#view=landing') }`) && <CreateSchool schools = { schools } setSchools = { setSchools } setError = { setError } setParams = { setParams }/> }
+                { (params === `#${ qs.stringify({ view: 'landing' }) }` || params === `${ qs.parse('#view=landing') }`) && <CreateStudent students = { students } setStudents = { setStudents } schools = { schools } setError = { setError } setParams = { setParams }/> }
+                { (params.includes(`#${ qs.stringify( { view : 'edit_school' } ) }`) || params.includes(`#${ qs.parse('#view=edit_schools') }`)) && <EditSchool school = { currentSchool } schools = { schools } setSchools = { setSchools } setParams = { setParams } setError = { setError }/>}
+                { (params.includes(`#${ qs.stringify( { view : 'edit_student' } ) }`) || params.includes(`#${ qs.parse('#view=edit_students') }`)) && <EditStudent student = { currentStudent } students = { students } setStudents = { setStudents } setParams = { setParams } setError = { setError }/> }
+            
+            </section>
+
             { (params === `#${ qs.stringify({ view: 'landing' }) }` || params === `${ qs.parse('#view=landing') }`) && <section id = 'enrollment'>
                 <div id = 'unenrolled'>
-                    <Unenrolled students = { students } setStudents = { setStudents } schools = { schools } params = { params } setParams = { setParams } setCurrentStudent = { setCurrentStudent }/>
+                    <Unenrolled students = { students } setStudents = { setStudents } unenrolledStudents = { unenrolledStudents } setUnenrolledStudents = { setUnenrolledStudents } schools = { schools } params = { params } setError = { setError } setParams = { setParams } setCurrentStudent = { setCurrentStudent }/>
                 </div>
                 <ul id = 'schoolList'>{
                     schools.map((school, idx) => {
                         return (
-                            <li className = 'school' key = { idx }><SchoolList school = { school } students = { students } setStudents = { setStudents } params = { params } setParams = { setParams } setError = { setError } setCurrentSchool = { setCurrentSchool }/></li>
+                            <li className = 'school' key = { idx }><SchoolList school = { school } students = { students } setStudents = { setStudents } unenrolledStudents = { unenrolledStudents } setUnenrolledStudents = { setUnenrolledStudents } setParams = { setParams } setError = { setError } setCurrentStudent = { setCurrentStudent } setCurrentSchool = { setCurrentSchool }/></li>
                         )
                     })
                 }</ul>
             </section> }
+
         </main>
     )
 };
